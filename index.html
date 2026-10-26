@@ -9,7 +9,7 @@
 <meta name="description" content="Kai Lee builds products and the content that gets people to them. Business, Computer Science and Entrepreneurship at WashU, class of 2028.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;1,6..96,400&family=Inter:wght@400;500&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500&family=Bricolage+Grotesque:opsz,wdth,wght@10..48,75..100,200..800&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   /* ============ TOKENS ============ */
   :root{
@@ -24,9 +24,9 @@
     --acid:#FF5A44;
     --acid-dim:#FF9179;
 
-    --fd:'Bodoni Moda',Didot,Georgia,serif;
-    --ft:'Inter',system-ui,sans-serif;
-    --fm:'Space Mono',ui-monospace,monospace;
+    --fd:'Bricolage Grotesque',system-ui,sans-serif;
+    --ft:'Hanken Grotesk',system-ui,sans-serif;
+    --fm:'Azeret Mono',ui-monospace,monospace;
 
     --t--1:clamp(.74rem,.72rem + .1vw,.8rem);
     --t-0:clamp(1rem,.97rem + .16vw,1.1rem);
@@ -75,7 +75,7 @@
   button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
   .shell{width:min(var(--maxw),100% - var(--gut)*2);margin-inline:auto}
-  .mono{font-family:var(--fm);font-size:var(--t--1);letter-spacing:.04em}
+  .mono{font-family:var(--fm);font-size:var(--t--1);letter-spacing:.015em}
 
 
   /* ============ BACKGROUND STRUCTURE ============ */
@@ -122,8 +122,8 @@
     backdrop-filter:blur(18px);border-bottom-color:var(--line);
   }
   .nav .shell{display:flex;align-items:center;justify-content:space-between;gap:20px}
-  .brand{font-family:var(--fd);font-size:1.3rem;letter-spacing:.005em}
-  .brand i{font-style:italic;color:var(--acid)}
+  .brand{font-family:var(--fd);font-weight:700;font-size:1.3rem;letter-spacing:-.02em}
+  .brand i{font-style:normal;color:var(--acid)}
   .nlinks{display:flex;align-items:center;gap:clamp(16px,2.4vw,34px)}
   .nlinks a{font-family:var(--fm);font-size:var(--t--1);color:var(--muted);position:relative;padding:3px 0;transition:color var(--d1) var(--ease)}
   .nlinks a:hover,.nlinks a.on{color:var(--paper)}
@@ -163,11 +163,11 @@
   @keyframes dash{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
   h1{
-    font-family:var(--fd);font-weight:400;
-    font-size:var(--t-4);line-height:1.02;letter-spacing:-.012em;
-    max-width:18ch;
+    font-family:var(--fd);font-weight:600;
+    font-size:var(--t-4);line-height:1.0;letter-spacing:-.034em;
+    max-width:17ch;
   }
-  h1 em{font-style:italic;color:var(--acid)}
+  h1 em{font-style:normal;font-weight:800;color:var(--acid)}
   .ln{display:block;overflow:hidden}
   .ln span{display:block;transform:translateY(102%);animation:lift .95s var(--ease-o) both}
   .ln:nth-child(2) span{animation-delay:.1s}
@@ -187,8 +187,8 @@
   }
   .fact{border-top:1px solid var(--line);padding-top:22px}
   .fact .n{
-    font-family:var(--fd);font-size:var(--t-3);line-height:1;
-    font-variant-numeric:tabular-nums;color:var(--paper);
+    font-family:var(--fd);font-weight:700;font-size:var(--t-3);line-height:1;
+    letter-spacing:-.028em;font-variant-numeric:tabular-nums;color:var(--paper);
   }
   .fact .l{margin-top:14px;color:var(--paper);font-size:var(--t-0);line-height:1.7;font-family:var(--ft)}
   .fact .l em{display:block;font-style:normal;color:var(--acid-dim);margin-top:5px;font-family:var(--fm);font-size:var(--t--1)}
@@ -200,8 +200,8 @@
   .shead{position:relative;margin-bottom:clamp(54px,8vw,104px)}
   .slabel{color:var(--acid-dim);display:block;margin-bottom:20px}
   .shead h2{
-    font-family:var(--fd);font-weight:400;
-    font-size:var(--t-3);line-height:1.04;letter-spacing:-.01em;max-width:14ch;
+    font-family:var(--fd);font-weight:600;
+    font-size:var(--t-3);line-height:1.02;letter-spacing:-.03em;max-width:14ch;
   }
   .shead p{
     margin-top:22px;color:var(--muted);max-width:50ch;
@@ -210,13 +210,14 @@
   .idx{
     position:absolute;top:-.26em;right:0;
     font-family:var(--fd);font-size:clamp(5.5rem,14vw,12rem);line-height:1;
-    color:rgba(240,80,60,.07);
-    -webkit-text-stroke:1.5px rgba(240,80,60,.42);
+    font-weight:800;letter-spacing:-.04em;
+    color:rgba(255,90,68,.13);
+    -webkit-text-stroke:2px rgba(255,90,68,.62);
     pointer-events:none;user-select:none;
     will-change:transform;
     transition:color var(--d3) var(--ease),-webkit-text-stroke-color var(--d3) var(--ease);
   }
-  .shead.in .idx{color:rgba(240,80,60,.11);-webkit-text-stroke-color:rgba(240,80,60,.55)}
+  .shead.in .idx{color:rgba(255,90,68,.19);-webkit-text-stroke-color:rgba(255,122,100,.8)}
 
   /* ============ WORK ============ */
   .grp{
@@ -236,8 +237,8 @@
   .pmain{min-width:0}
   .ptag{color:var(--acid-dim);display:block;margin-bottom:14px}
   .pname{
-    display:block;font-family:var(--fd);font-size:var(--t-2);
-    line-height:1.12;letter-spacing:-.008em;
+    display:block;font-family:var(--fd);font-weight:600;font-size:var(--t-2);
+    line-height:1.12;letter-spacing:-.025em;
     transition:color var(--d2) var(--ease);
   }
   .prole{display:block;color:var(--muted);font-family:var(--fm);font-size:var(--t--1);margin-top:12px}
@@ -280,8 +281,8 @@
   }
   .pstat{display:flex;flex-direction:column;gap:8px}
   .pnum{
-    font-family:var(--fd);font-size:var(--t-2);line-height:1;
-    color:var(--acid);font-variant-numeric:tabular-nums;
+    font-family:var(--fd);font-weight:700;font-size:var(--t-2);line-height:1;
+    letter-spacing:-.025em;color:var(--acid);font-variant-numeric:tabular-nums;
   }
   .plab{color:var(--muted);font-family:var(--fm);font-size:var(--t--1)}
 
@@ -311,7 +312,7 @@
   .art.in .shots img:nth-child(2){transition-delay:.12s}
   .shots img:hover{transform:translateY(-6px);filter:saturate(1.05)}
   figcaption{margin-top:clamp(18px,2.4vw,26px);max-width:52ch}
-  figcaption b{display:block;font-family:var(--fd);font-size:var(--t-1);font-weight:400;margin-bottom:8px}
+  figcaption b{display:block;font-family:var(--fd);font-size:var(--t-1);font-weight:600;letter-spacing:-.02em;margin-bottom:8px}
   figcaption span{color:var(--muted);font-size:var(--t-0);line-height:1.8;font-family:var(--ft)}
 
   /* ============ ABOUT ============ */
@@ -352,10 +353,10 @@
 
   /* ============ CONTACT ============ */
   .contact h2{
-    font-family:var(--fd);font-weight:400;
-    font-size:var(--t-3);line-height:1.08;letter-spacing:-.01em;max-width:15ch;
+    font-family:var(--fd);font-weight:600;
+    font-size:var(--t-3);line-height:1.04;letter-spacing:-.03em;max-width:15ch;
   }
-  .contact h2 em{font-style:italic;color:var(--acid)}
+  .contact h2 em{font-style:normal;font-weight:800;color:var(--acid)}
   .clinks{
     margin-top:clamp(44px,6vw,64px);
     display:grid;gap:0;border-top:1px solid var(--line);max-width:640px;
@@ -363,7 +364,7 @@
   .clinks a{
     display:flex;align-items:baseline;justify-content:space-between;gap:20px;
     padding:22px 2px;border-bottom:1px solid var(--line);
-    font-family:var(--fd);font-size:var(--t-1);color:var(--paper);
+    font-family:var(--fd);font-weight:500;font-size:var(--t-1);letter-spacing:-.015em;color:var(--paper);
     transition:padding-left var(--d2) var(--ease),color var(--d2) var(--ease);
   }
   .clinks a span{font-family:var(--fm);font-size:var(--t--1);color:var(--muted);transition:color var(--d2) var(--ease)}
