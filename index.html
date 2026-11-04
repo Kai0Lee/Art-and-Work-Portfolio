@@ -458,6 +458,240 @@
     .proj:hover .phead{padding-left:0}
   }
 
+
+  /* ============ V5 : VISUAL WEIGHT ============ */
+
+  /* --- indexed work rows --- */
+  #built .shell,#work .shell{counter-reset:p}
+  .proj{counter-increment:p;position:relative;overflow:hidden}
+  .ptag::before{
+    content:counter(p,decimal-leading-zero) "  ";
+    color:var(--acid);font-variant-numeric:tabular-nums;
+  }
+  /* scarlet line that draws along the row on hover */
+  .proj::after{
+    content:"";position:absolute;left:0;right:0;bottom:-1px;height:1px;
+    background:var(--acid);transform:scaleX(0);transform-origin:left;
+    transition:transform .7s var(--ease-o);
+  }
+  .proj:hover::after{transform:scaleX(1)}
+
+  /* --- kinetic divider --- */
+  .ticker{
+    position:relative;overflow:hidden;
+    padding:clamp(26px,3.6vw,40px) 0;
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    background:rgba(255,90,68,.035);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 9%,#000 91%,transparent);
+  }
+  .track{display:flex;width:max-content;animation:slide 34s linear infinite}
+  .ticker:hover .track{animation-play-state:paused}
+  .track span{
+    font-family:var(--fd);font-size:clamp(1.5rem,3.6vw,2.6rem);
+    letter-spacing:-.012em;color:var(--paper);
+    padding-right:clamp(26px,3.4vw,44px);white-space:nowrap;
+  }
+  .track span i{font-style:normal;color:var(--acid);padding-left:clamp(26px,3.4vw,44px)}
+  @keyframes slide{to{transform:translateX(-50%)}}
+
+  /* --- gallery: bigger, offset, parallax --- */
+  .gal{align-items:start}
+  .art:not(.pair):nth-of-type(even){margin-top:clamp(0px,7vw,96px)}
+  .shots img{
+    --py:0px; --hy:0px; --hs:1;
+    transform:translate3d(0,calc(var(--py) + var(--hy)),0) scale(var(--hs));
+    transition:clip-path 1.05s var(--ease-o),transform .75s var(--ease),filter var(--d2) var(--ease);
+    will-change:transform;
+  }
+  .shots img:hover{--hy:-10px; --hs:1.014}
+  .art.pair .shots{gap:clamp(14px,1.8vw,24px)}
+  figcaption{
+    border-top:1px solid var(--line);padding-top:clamp(14px,1.8vw,20px);
+    margin-top:clamp(20px,2.6vw,30px);
+  }
+
+  /* --- section heads: sticky label rail on wide screens --- */
+  @media (min-width:1100px){
+    .slabel{
+      position:sticky;top:96px;
+      display:inline-block;
+    }
+  }
+
+  /* --- hero scroll cue --- */
+  .cue{
+    display:flex;align-items:center;gap:12px;
+    margin-top:clamp(52px,7vw,78px);color:var(--dim);
+  }
+  .cue b{
+    display:block;width:38px;height:1px;background:var(--acid);
+    transform-origin:left;animation:cueline 2.6s var(--ease) infinite;
+  }
+  @keyframes cueline{
+    0%,100%{transform:scaleX(.45);opacity:.55}
+    50%{transform:scaleX(1);opacity:1}
+  }
+
+  /* --- about portrait parallax + frame --- */
+  .shot img{--py:0px;transform:translate3d(0,var(--py),0);will-change:transform}
+  .shot::before{
+    content:"";position:absolute;inset:auto auto -14px -14px;
+    width:56px;height:56px;border-left:1px solid var(--acid);border-bottom:1px solid var(--acid);
+    opacity:.55;
+  }
+
+  /* --- staggered children --- */
+  .clinks a{opacity:0;transform:translateY(14px);
+    transition:opacity .6s var(--ease-o),transform .6s var(--ease-o),
+               padding-left var(--d2) var(--ease),color var(--d2) var(--ease)}
+  .clinks.in a{opacity:1;transform:none}
+  .clinks.in a:nth-child(1){transition-delay:.05s}
+  .clinks.in a:nth-child(2){transition-delay:.13s}
+  .clinks.in a:nth-child(3){transition-delay:.21s}
+  .clinks.in a:nth-child(4){transition-delay:.29s}
+
+  .tags .tag{opacity:0;transform:translateY(10px);
+    transition:opacity .5s var(--ease-o),transform .5s var(--ease-o),
+               border-color var(--d1) var(--ease),color var(--d1) var(--ease)}
+  .tags.in .tag{opacity:1;transform:none}
+  .tags.in .tag:nth-child(1){transition-delay:.04s}
+  .tags.in .tag:nth-child(2){transition-delay:.1s}
+  .tags.in .tag:nth-child(3){transition-delay:.16s}
+  .tags.in .tag:nth-child(4){transition-delay:.22s}
+  .tags.in .tag:nth-child(5){transition-delay:.28s}
+  .tags.in .tag:nth-child(6){transition-delay:.34s}
+
+  @media (prefers-reduced-motion:reduce){
+    .track{animation:none}
+    .cue b{animation:none;transform:scaleX(1)}
+    .shots img,.shot img{transform:none!important}
+    .clinks a,.tags .tag{opacity:1;transform:none}
+    .proj:hover::after{transform:scaleX(1)}
+  }
+
+
+  /* ============ V6 : BUILT vs EXPERIENCE ============ */
+
+  /* flagship builds read as blocks, not list rows */
+  .proj.feat{
+    border:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    margin-bottom:clamp(16px,2vw,24px);
+    background:linear-gradient(180deg,rgba(246,243,236,.022),rgba(246,243,236,0));
+    transition:background var(--d2) var(--ease),border-color var(--d2) var(--ease),transform var(--d2) var(--ease);
+  }
+  .proj.feat:hover{
+    border-color:rgba(255,90,68,.42);
+    background:linear-gradient(180deg,rgba(255,90,68,.05),rgba(246,243,236,.01));
+    transform:translateY(-3px);
+  }
+  .proj.feat .phead{padding:clamp(30px,3.6vw,44px) clamp(24px,3vw,40px)}
+  .proj.feat:hover .phead{padding-left:clamp(32px,3.6vw,52px)}
+  .proj.feat .pname{font-size:calc(var(--t-2) * 1.22)}
+  .proj.feat .pline{font-size:var(--t-1);line-height:1.6;max-width:44ch}
+  .proj.feat::after{display:none}
+
+  /* always-visible metric strip on builds */
+  .pstats.open-strip{
+    display:flex;flex-wrap:wrap;
+    gap:clamp(26px,4vw,56px);
+    margin:0;padding:0 clamp(24px,3vw,40px) clamp(28px,3.4vw,38px);
+    border:0;
+  }
+  .proj.feat .pbody-in{padding-left:clamp(24px,3vw,40px);padding-right:clamp(24px,3vw,40px)}
+  .proj.feat .pbody.open .pbody-in{padding-bottom:clamp(32px,4vw,46px)}
+  .proj.feat .pstats:not(.open-strip){display:none}
+
+  /* experience list stays tight and secondary */
+  .proj:not(.feat) .pname{font-size:calc(var(--t-2) * .92)}
+  .proj:not(.feat) .phead{padding:clamp(26px,3.2vw,38px) 0}
+
+  @media (max-width:620px){
+    .proj.feat .phead,.pstats.open-strip,
+    .proj.feat .pbody-in{padding-left:20px;padding-right:20px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .proj.feat:hover{transform:none}
+  }
+
+
+  /* ============ V7 : DEPTH + REACTIVITY ============ */
+
+  /* --- oversized ghost wordmark behind the hero --- */
+  .ghost{
+    position:absolute;right:-.06em;bottom:-.3em;z-index:0;
+    font-family:var(--fd);font-size:clamp(7rem,27vw,22rem);line-height:.8;
+    letter-spacing:-.04em;white-space:nowrap;pointer-events:none;user-select:none;
+    color:transparent;-webkit-text-stroke:1px rgba(255,90,68,.13);
+    will-change:transform;
+  }
+
+  /* --- pointer spotlight inside flagship cards --- */
+  .proj.feat{position:relative;isolation:isolate}
+  .proj.feat::before{
+    content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+    opacity:0;transition:opacity .45s var(--ease);
+    background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%),
+               rgba(255,90,68,.11),transparent 68%);
+  }
+  .proj.feat:hover::before{opacity:1}
+
+  /* --- heading wipe reveal --- */
+  .shead h2,.contact h2{
+    clip-path:inset(0 0 102% 0);
+    transition:clip-path 1s var(--ease-o) .08s;
+  }
+  .shead.in h2,.obs.in .contact h2,.contact .obs.in h2{clip-path:inset(0 0 -10% 0)}
+
+  /* --- gallery: 3D tilt --- */
+  .shots{perspective:1100px}
+  .shots img{
+    transform:translate3d(0,calc(var(--py) + var(--hy)),0)
+              rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(var(--hs));
+    transform-style:preserve-3d;
+  }
+  .art figcaption{transition:transform .6s var(--ease),border-color .4s var(--ease)}
+  .art:hover figcaption{transform:translateX(10px);border-color:rgba(255,90,68,.4)}
+
+  /* --- nav hides going down, returns going up --- */
+  .nav{transform:translateY(0);transition:padding var(--d2) var(--ease),
+       background var(--d2) var(--ease),border-color var(--d2) var(--ease),
+       transform .55s var(--ease)}
+  .nav.away{transform:translateY(-104%)}
+
+  /* --- stat underline draws after the count lands --- */
+  .fact{position:relative}
+  .fact .n{position:relative;display:inline-block}
+  .fact .n::after{
+    content:"";position:absolute;left:0;right:0;bottom:-.14em;height:2px;
+    background:var(--acid);transform:scaleX(0);transform-origin:left;
+    transition:transform .9s var(--ease-o);
+  }
+  .fact .n.done::after{transform:scaleX(1)}
+
+  /* --- contact links grow an arrow --- */
+  .clinks a{position:relative}
+  .clinks a::before{
+    content:"→";position:absolute;left:-4px;opacity:0;
+    color:var(--acid);transition:opacity .35s var(--ease),transform .35s var(--ease);
+    transform:translateX(-8px);
+  }
+  .clinks a:hover::before{opacity:1;transform:translateX(0)}
+  .clinks a:hover{padding-left:28px}
+
+  /* --- lightbox: let JS drive the open --- */
+  .lb img{transition:none}
+  .lb.vis img{transform:none}
+
+  @media (prefers-reduced-motion:reduce){
+    .ghost{display:none}
+    .shead h2,.contact h2{clip-path:none}
+    .nav.away{transform:none}
+    .fact .n::after{transform:scaleX(1)}
+    .art:hover figcaption{transform:none}
+  }
+
   /* ============ SCROLL REVEAL (bidirectional) ============ */
   .obs{
     opacity:0;transform:translateY(22px);
@@ -522,7 +756,8 @@
   <div class="shell">
     <a href="#top" class="brand">Kai Lee<i>.</i></a>
     <div class="nlinks">
-      <a href="#work">Work</a>
+      <a href="#built">Built</a>
+      <a href="#work">Experience</a>
       <a href="#design">Design</a>
       <a href="#about">About</a>
       <a class="pill" href="data:application/pdf;base64,JVBERi0xLjMKJf////8KOSAwIG9iago8PAovVHlwZSAvRXh0R1N0YXRlCi9jYSAxCj4+CmVuZG9iagoxMSAwIG9iago8PAovUyAvVVJJCi9VUkkgKHRlbDorMTIwMTg0NDcyMDUpCj4+CmVuZG9iagoxMiAwIG9iago8PAovU3VidHlwZSAvTGluawovQSAxMSAwIFIKL1R5cGUgL0Fubm90Ci9SZWN0IFsxNTMuODM0OTkxIDcwNC44IDIyOS40NjQ5OTEgNzE1LjhdCi9Cb3JkZXIgWzAgMCAwXQovRiA0Cj4+CmVuZG9iagoxNCAwIG9iago8PAovUyAvVVJJCi9VUkkgKG1haWx0bzprYWl3ZW5rYWlsZWVAZ21haWwuY29tKQo+PgplbmRvYmoKMTUgMCBvYmoKPDwKL1N1YnR5cGUgL0xpbmsKL0EgMTQgMCBSCi9UeXBlIC9Bbm5vdAovUmVjdCBbMjM5Ljk2NDk5NiA3MDQuOCAzNDQuNDM0OTk2IDcxNS44XQovQm9yZGVyIFswIDAgMF0KL0YgNAo+PgplbmRvYmoKMTYgMCBvYmoKPDwKL1MgL1VSSQovVVJJIChodHRwczovL2xpbmtlZGluLmNvbS9pbi9rYWktbGVlMS8pCj4+CmVuZG9iagoxNyAwIG9iago8PAovU3VidHlwZSAvTGluawovQSAxNiAwIFIKL1R5cGUgL0Fubm90Ci9SZWN0IFszNTQuOTM0OTk4IDcwNC44IDQ1NS42NjQ5OTggNzE1LjhdCi9Cb3JkZXIgWzAgMCAwXQovRiA0Cj4+CmVuZG9iagoxOCAwIG9iago8PAovVHlwZSAvRXh0R1N0YXRlCi9DQSAxCj4+CmVuZG9iago4IDAgb2JqCjw8Ci9UeXBlIC9QYWdlCi9QYXJlbnQgMSAwIFIKL01lZGlhQm94IFswIDAgNjEyIDc5Ml0KL0NvbnRlbnRzIDYgMCBSCi9SZXNvdXJjZXMgNyAwIFIKL1VzZXJVbml0IDEKL0Fubm90cyBbMTIgMCBSIDE1IDAgUiAxNyAwIFJdCj4+CmVuZG9iago3IDAgb2JqCjw8Ci9Qcm9jU2V0IFsvUERGIC9UZXh0IC9JbWFnZUIgL0ltYWdlQyAvSW1hZ2VJXQovRXh0R1N0YXRlIDw8Ci9HczEgOSAwIFIKL0dzMiAx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bGUgdHJ1ZQo+PgplbmRvYmoKeHJlZgowIDI0CjAwMDAwMDAwMDAgNjU1MzUgZiAKMDAwMDAwNjE3MSAwMDAwMCBuIAowMDAwMDA2MjI4IDAwMDAwIG4gCjAwMDAwMDYwODQgMDAwMDAgbiAKMDAwMDAwNjA2MyAwMDAwMCBuIAowMDAwMDA2Mjc1IDAwMDAwIG4gCjAwMDAwMDA5ODIgMDAwMDAgbiAKMDAwMDAwMDgxMiAwMDAwMCBuIAowMDAwMDAwNjY1IDAwMDAwIG4gCjAwMDAwMDAwMTUgMDAwMDAgbiAKMDAwMDAwNTc2MyAwMDAwMCBuIAowMDAwMDAwMDU5IDAwMDAwIG4gCjAwMDAwMDAxMTMgMDAwMDAgbiAKMDAwMDAwNTg2MiAwMDAwMCBuIAowMDAwMDAwMjM2IDAwMDAwIG4gCjAwMDAwMDAzMDMgMDAwMDAgbiAKMDAwMDAwMDQyNiAwMDAwMCBuIAowMDAwMDAwNDk3IDAwMDAwIG4gCjAwMDAwMDA2MjAgMDAwMDAgbiAKMDAwMDAwNTk2MiAwMDAwMCBuIAowMDAwMDA1Njg3IDAwMDAwIG4gCjAwMDAwMDU1OTUgMDAwMDAgbiAKMDAwMDAwNTYyMyAwMDAwMCBuIAowMDAwMDA1NjUxIDAwMDAwIG4gCnRyYWlsZXIKPDwKL1NpemUgMjQKL1Jvb3QgMyAwIFIKL0luZm8gMjAgMCBSCi9JRCBbPGZhMTJhZDJlYjA4OTM1NzU0NzYyMTc4Y2Y0NWFiYmJkPiA8ZmExMmFkMmViMDg5MzU3NTQ3NjIxNzhjZjQ1YWJiYmQ+XQo+PgpzdGFydHhyZWYKNjMxOAolJUVPRgo=" download="Kai-Lee-Resume.pdf">Resume</a>
@@ -531,6 +766,7 @@
 </nav>
 
 <header class="hero" id="top">
+  <span class="ghost" aria-hidden="true">Kai Lee</span>
   <div class="shell">
     <p class="kicker mono"><b></b>WashU 2028 · Business, CS &amp; Entrepreneurship</p>
     <h1>
@@ -540,9 +776,11 @@
     </h1>
     <p class="sub obs" style="--dly:260ms"><b>Product management is where those two halves meet.</b> I have shipped a Roblox game to millions of players, grown AI tools to thousands of users through content alone, and spent this year doing product and investing work across four teams.</p>
     <div class="cta obs" style="--dly:340ms">
-      <a class="pill" href="#work">See the work</a>
+      <a class="pill" href="#built">See the work</a>
       <a class="pill" href="mailto:kaiwenkailee@gmail.com">kaiwenkailee@gmail.com</a>
     </div>
+
+    <div class="cue mono obs" style="--dly:420ms"><b></b>Scroll</div>
 
     <div class="facts">
       <div class="fact obs">
@@ -562,17 +800,15 @@
 </header>
 
 <main>
-  <section class="sec" id="work">
-    <div class="shell">
-      <div class="shead obs">
-        <span class="idx" aria-hidden="true">01</span>
-        <span class="slabel mono">Index of work</span>
-        <h2>Things I have built</h2>
-        <p>Roles and projects, newest context first. Open any one for the problem, what I actually did, and where it landed.</p>
-      </div>
-
-      <p class="grp mono obs">Companies &amp; roles</p>
-        <article class="proj obs" style="--dly:0ms">
+  <section class="sec" id="built">
+  <div class="shell">
+    <div class="shead obs">
+      <span class="idx" aria-hidden="true">01</span>
+      <span class="slabel mono">Ventures &amp; products</span>
+      <h2>Things I have built</h2>
+      <p>Three I started and shipped myself. Open any one for the problem, what I actually did, and where it landed.</p>
+    </div>
+<article class="proj feat obs" style="--dly:0ms">
           <button class="phead" aria-expanded="false" aria-controls="p-golira">
             <span class="pmain">
               <span class="ptag mono">Company</span>
@@ -583,15 +819,67 @@
             <span class="pmeta"><i>Jul 2021 — Present</i><i>Short Hills, NJ</i></span>
             <span class="pchev" aria-hidden="true"></span>
           </button>
+          <div class="pstats open-strip"><div class="pstat"><span class="pnum" data-count="3M+">3M+</span><span class="plab">players</span></div><div class="pstat"><span class="pnum" data-count="$15k+">$15k+</span><span class="plab">revenue</span></div></div>
+              
           <div class="pbody" id="p-golira">
             <div class="pbody-in">
-              <div class="pstats"><div class="pstat"><span class="pnum" data-count="3M+">3M+</span><span class="plab">players</span></div><div class="pstat"><span class="pnum" data-count="$15k+">$15k+</span><span class="plab">revenue</span></div></div>
               <div class="blks"><div class="blk"><h4 class="mono">The problem</h4><p>Roblox is a brutal discovery market. Thousands of simulators launch and die unplayed, so the hard part was never writing the game loop, it was making something people came back to.</p></div><div class="blk"><h4 class="mono">What I did</h4><p>Co-founded the studio and worked as its Roblox game developer: gameplay programming in Lua, 3D modelling and environment art in Blender, and the YouTube channel that fed players into the game.</p></div><div class="blk"><h4 class="mono">Where it got to</h4><p>3M+ players and $15k+ in revenue, from a game that is still live and still running.</p></div></div>
               
             </div>
           </div>
         </article>
-        <article class="proj obs" style="--dly:60ms">
+<article class="proj feat obs" style="--dly:0ms">
+          <button class="phead" aria-expanded="false" aria-controls="p-innovatize">
+            <span class="pmain">
+              <span class="ptag mono">Project</span>
+              <span class="pname">Innovatize</span>
+              <span class="prole">Founder</span>
+              <span class="pline">An AI startup-idea generator that reached 13,000+ users.</span>
+            </span>
+            <span class="pmeta"><i>Sep 2023 — Oct 2024</i></span>
+            <span class="pchev" aria-hidden="true"></span>
+          </button>
+          <div class="pstats open-strip"><div class="pstat"><span class="pnum" data-count="13,000+">13,000+</span><span class="plab">users</span></div></div>
+              
+          <div class="pbody" id="p-innovatize">
+            <div class="pbody-in">
+              <div class="blks"><div class="blk"><h4 class="mono">The problem</h4><p>People stall at the blank page of starting something. The gap is not ambition, it is turning a vague interest into a concept concrete enough to test.</p></div><div class="blk"><h4 class="mono">What I did</h4><p>Built and launched the platform, then ran user interviews to find where ideation actually broke down and turned those findings into feature iterations on the AI experience that converted a user's inputs into personalized startup concepts.</p></div><div class="blk"><h4 class="mono">Where it got to</h4><p>13,000+ users.</p></div></div>
+              
+            </div>
+          </div>
+        </article>
+<article class="proj feat obs" style="--dly:60ms">
+          <button class="phead" aria-expanded="false" aria-controls="p-gamervault">
+            <span class="pmain">
+              <span class="ptag mono">Project</span>
+              <span class="pname">Gamer Vault</span>
+              <span class="prole">Founder</span>
+              <span class="pline">AI recommendations for overlooked Roblox games, grown entirely through content.</span>
+            </span>
+            <span class="pmeta"><i>Oct 2024 — Feb 2025</i></span>
+            <span class="pchev" aria-hidden="true"></span>
+          </button>
+          <div class="pstats open-strip"><div class="pstat"><span class="pnum" data-count="2,500+">2,500+</span><span class="plab">users</span></div><div class="pstat"><span class="pnum" data-count="20,000+">20,000+</span><span class="plab">game discoveries</span></div></div>
+              
+          <div class="pbody" id="p-gamervault">
+            <div class="pbody-in">
+              <div class="blks"><div class="blk"><h4 class="mono">The problem</h4><p>The same Roblox games get played because the same games get surfaced. Smaller developers have no route to players who would actually like their game.</p></div><div class="blk"><h4 class="mono">What I did</h4><p>Built an AI-driven recommendation platform plus a submission and review system so smaller developers could put games in front of relevant players. Acquisition was organic: daily content on itskaiwl across Instagram, TikTok and YouTube.</p></div><div class="blk"><h4 class="mono">Where it got to</h4><p>2,500+ users and 20,000+ game discoveries. The itskaiwl channels generated 3M+ views and 4,000+ followers across platforms.</p></div></div>
+              
+            </div>
+          </div>
+        </article>
+  </div>
+</section>
+
+<section class="sec" id="work">
+  <div class="shell">
+    <div class="shead obs">
+      <span class="idx" aria-hidden="true">02</span>
+      <span class="slabel mono">Internships &amp; fellowship</span>
+      <h2>Work experience</h2>
+      <p>Product, investing and marketing teams, most recent first.</p>
+    </div>
+<article class="proj obs" style="--dly:0ms">
           <button class="phead" aria-expanded="false" aria-controls="p-arkview">
             <span class="pmain">
               <span class="ptag mono">Internship</span>
@@ -610,26 +898,7 @@
             </div>
           </div>
         </article>
-        <article class="proj obs" style="--dly:120ms">
-          <button class="phead" aria-expanded="false" aria-controls="p-productspace">
-            <span class="pmain">
-              <span class="ptag mono">Fellowship</span>
-              <span class="pname">Product Space</span>
-              <span class="prole">Product Management Fellow</span>
-              <span class="pline">A cross-generational redesign brief, mentored by a Meta product professional.</span>
-            </span>
-            <span class="pmeta"><i>Feb — May 2026</i><i>St. Louis, MO</i></span>
-            <span class="pchev" aria-hidden="true"></span>
-          </button>
-          <div class="pbody" id="p-productspace">
-            <div class="pbody-in">
-              
-              <div class="blks"><div class="blk"><h4 class="mono">The problem</h4><p>Facebook keeps older users comfortable and loses younger ones. Most fixes for one group break the experience for the other.</p></div><div class="blk"><h4 class="mono">What I did</h4><p>Defined the product requirements and analyzed cross-generational user needs with guidance from a Meta product professional, then designed and prototyped features aimed at younger engagement without disrupting how existing users already navigate the product.</p></div><div class="blk"><h4 class="mono">What I took from it</h4><p>The tradeoff was the whole exercise: every feature that felt obvious for a 19-year-old cost something in familiarity for a 60-year-old. Prioritizing meant being explicit about which audience absorbed the cost.</p></div></div>
-              <p class="note">A fellowship project. Facebook was the subject of the brief; I was not employed by Meta.</p>
-            </div>
-          </div>
-        </article>
-        <article class="proj obs" style="--dly:0ms">
+<article class="proj obs" style="--dly:55ms">
           <button class="phead" aria-expanded="false" aria-controls="p-znest">
             <span class="pmain">
               <span class="ptag mono">Internship</span>
@@ -648,7 +917,7 @@
             </div>
           </div>
         </article>
-        <article class="proj obs" style="--dly:60ms">
+<article class="proj obs" style="--dly:110ms">
           <button class="phead" aria-expanded="false" aria-controls="p-spike">
             <span class="pmain">
               <span class="ptag mono">Internship</span>
@@ -667,53 +936,35 @@
             </div>
           </div>
         </article>
-
-      <p class="grp second mono obs">Independent projects</p>
-        <article class="proj obs" style="--dly:0ms">
-          <button class="phead" aria-expanded="false" aria-controls="p-innovatize">
+<article class="proj obs" style="--dly:165ms">
+          <button class="phead" aria-expanded="false" aria-controls="p-productspace">
             <span class="pmain">
-              <span class="ptag mono">Project</span>
-              <span class="pname">Innovatize</span>
-              <span class="prole">Founder</span>
-              <span class="pline">An AI startup-idea generator that reached 13,000+ users.</span>
+              <span class="ptag mono">Fellowship</span>
+              <span class="pname">Product Space</span>
+              <span class="prole">Product Management Fellow</span>
+              <span class="pline">A cross-generational redesign brief, mentored by a Meta product professional.</span>
             </span>
-            <span class="pmeta"><i>Sep 2023 — Oct 2024</i></span>
+            <span class="pmeta"><i>Feb — May 2026</i><i>St. Louis, MO</i></span>
             <span class="pchev" aria-hidden="true"></span>
           </button>
-          <div class="pbody" id="p-innovatize">
+          <div class="pbody" id="p-productspace">
             <div class="pbody-in">
-              <div class="pstats"><div class="pstat"><span class="pnum" data-count="13,000+">13,000+</span><span class="plab">users</span></div></div>
-              <div class="blks"><div class="blk"><h4 class="mono">The problem</h4><p>People stall at the blank page of starting something. The gap is not ambition, it is turning a vague interest into a concept concrete enough to test.</p></div><div class="blk"><h4 class="mono">What I did</h4><p>Built and launched the platform, then ran user interviews to find where ideation actually broke down and turned those findings into feature iterations on the AI experience that converted a user's inputs into personalized startup concepts.</p></div><div class="blk"><h4 class="mono">Where it got to</h4><p>13,000+ users.</p></div></div>
               
+              <div class="blks"><div class="blk"><h4 class="mono">The problem</h4><p>Facebook keeps older users comfortable and loses younger ones. Most fixes for one group break the experience for the other.</p></div><div class="blk"><h4 class="mono">What I did</h4><p>Defined the product requirements and analyzed cross-generational user needs with guidance from a Meta product professional, then designed and prototyped features aimed at younger engagement without disrupting how existing users already navigate the product.</p></div><div class="blk"><h4 class="mono">What I took from it</h4><p>The tradeoff was the whole exercise: every feature that felt obvious for a 19-year-old cost something in familiarity for a 60-year-old. Prioritizing meant being explicit about which audience absorbed the cost.</p></div></div>
+              <p class="note">A fellowship project. Facebook was the subject of the brief; I was not employed by Meta.</p>
             </div>
           </div>
         </article>
-        <article class="proj obs" style="--dly:60ms">
-          <button class="phead" aria-expanded="false" aria-controls="p-gamervault">
-            <span class="pmain">
-              <span class="ptag mono">Project</span>
-              <span class="pname">Gamer Vault</span>
-              <span class="prole">Founder</span>
-              <span class="pline">AI recommendations for overlooked Roblox games, grown entirely through content.</span>
-            </span>
-            <span class="pmeta"><i>Oct 2024 — Feb 2025</i></span>
-            <span class="pchev" aria-hidden="true"></span>
-          </button>
-          <div class="pbody" id="p-gamervault">
-            <div class="pbody-in">
-              <div class="pstats"><div class="pstat"><span class="pnum" data-count="2,500+">2,500+</span><span class="plab">users</span></div><div class="pstat"><span class="pnum" data-count="20,000+">20,000+</span><span class="plab">game discoveries</span></div></div>
-              <div class="blks"><div class="blk"><h4 class="mono">The problem</h4><p>The same Roblox games get played because the same games get surfaced. Smaller developers have no route to players who would actually like their game.</p></div><div class="blk"><h4 class="mono">What I did</h4><p>Built an AI-driven recommendation platform plus a submission and review system so smaller developers could put games in front of relevant players. Acquisition was organic: daily content on itskaiwl across Instagram, TikTok and YouTube.</p></div><div class="blk"><h4 class="mono">Where it got to</h4><p>2,500+ users and 20,000+ game discoveries. The itskaiwl channels generated 3M+ views and 4,000+ followers across platforms.</p></div></div>
-              
-            </div>
-          </div>
-        </article>
-    </div>
-  </section>
+  </div>
+</section>
 
+<div class="ticker" aria-hidden="true">
+  <div class="track"><span>Product management<i>/</i></span><span>Roblox development<i>/</i></span><span>AI tools<i>/</i></span><span>Growth through content<i>/</i></span><span>Graphic design<i>/</i></span><span>Entrepreneurship<i>/</i></span><span>Product management<i>/</i></span><span>Roblox development<i>/</i></span><span>AI tools<i>/</i></span><span>Growth through content<i>/</i></span><span>Graphic design<i>/</i></span><span>Entrepreneurship<i>/</i></span></div>
+</div>
   <section class="sec" id="design">
     <div class="shell">
       <div class="shead obs">
-        <span class="idx" aria-hidden="true">02</span>
+        <span class="idx" aria-hidden="true">03</span>
         <span class="slabel mono">Graphics</span>
         <h2>Design</h2>
         <p>Social graphics for Phi Gamma Nu, WashU's professional business fraternity, where I'm digital marketing chair. Click any image to enlarge.</p>
@@ -742,7 +993,7 @@
   <section class="sec" id="about">
     <div class="shell">
       <div class="shead obs">
-        <span class="idx" aria-hidden="true">03</span>
+        <span class="idx" aria-hidden="true">04</span>
         <span class="slabel mono">Short Hills, NJ → St. Louis, MO</span>
         <h2>About</h2>
       </div>
@@ -792,7 +1043,7 @@
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   /* ---- bidirectional scroll reveals ---- */
-  var targets = document.querySelectorAll('.obs,.rule,.art');
+  var targets = document.querySelectorAll('.obs,.rule,.art,.clinks,.tags');
   if(reduce || !('IntersectionObserver' in window)){
     targets.forEach(function(el){ el.classList.add('in'); });
   } else {
@@ -825,7 +1076,7 @@
       if(t0===null) t0=ts;
       var p=Math.min((ts-t0)/dur,1);
       el.textContent = fmt(target*(1-Math.pow(1-p,3)));
-      if(p<1) requestAnimationFrame(step); else el.textContent = pre+numStr+suf;
+      if(p<1) requestAnimationFrame(step); else { el.textContent = pre+numStr+suf; el.classList.add('done'); }
     }
     el.textContent = fmt(0);
     requestAnimationFrame(step);
@@ -853,9 +1104,16 @@
   var nav=document.getElementById('nav');
   var links=Array.prototype.slice.call(document.querySelectorAll('.nlinks a[href^="#"]'));
   var secs=links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  var prevY=window.scrollY;
   function onScroll(){
-    if(nav) nav.classList.toggle('stuck', window.scrollY>40);
-    var y=window.scrollY+window.innerHeight*.3, cur=null;
+    var sy=window.scrollY;
+    if(nav){
+      nav.classList.toggle('stuck', sy>40);
+      /* hide travelling down, bring back travelling up */
+      nav.classList.toggle('away', sy>280 && sy>prevY && !nav.matches(':focus-within'));
+    }
+    prevY=sy;
+    var y=sy+window.innerHeight*.3, cur=null;
     secs.forEach(function(s){ if(s.offsetTop<=y) cur=s.id; });
     links.forEach(function(a){ a.classList.toggle('on', a.getAttribute('href')==='#'+cur); });
   }
@@ -865,11 +1123,24 @@
   /* ---- lightbox ---- */
   var lb=document.getElementById('lb'), lbImg=document.getElementById('lbImg'),
       lbClose=document.getElementById('lbClose'), last=null;
-  function open(src,alt){
+  function open(src,alt,from){
     last=document.activeElement;
     lbImg.src=src; lbImg.alt=alt||'';
     lb.classList.add('on');
-    requestAnimationFrame(function(){ lb.classList.add('vis'); });
+    requestAnimationFrame(function(){
+      lb.classList.add('vis');
+      if(reduce || !from || !lbImg.animate) return;
+      var a=from.getBoundingClientRect(), b=lbImg.getBoundingClientRect();
+      if(!b.width || !b.height) return;
+      var sx=a.width/b.width, sy=a.height/b.height;
+      var dx=(a.left+a.width/2)-(b.left+b.width/2);
+      var dy=(a.top+a.height/2)-(b.top+b.height/2);
+      lbImg.animate(
+        [{transform:'translate('+dx+'px,'+dy+'px) scale('+sx+','+sy+')'},
+         {transform:'none'}],
+        {duration:620, easing:'cubic-bezier(.16,.9,.3,1)'}
+      );
+    });
     document.body.style.overflow='hidden';
     lbClose.focus();
   }
@@ -880,7 +1151,7 @@
     if(last) last.focus();
   }
   document.querySelectorAll('.shots img').forEach(function(im){
-    im.addEventListener('click',function(){ open(im.src, im.alt); });
+    im.addEventListener('click',function(){ open(im.src, im.alt, im); });
   });
   lb.addEventListener('click',close);
   lbClose.addEventListener('click',function(e){ e.stopPropagation(); close(); });
@@ -912,27 +1183,69 @@
     })();
   }
 
-  /* ---- scroll progress + numeral parallax ---- */
+  /* ---- scroll progress + layered parallax ---- */
   (function(){
     var prog=document.getElementById('prog');
-    var idx=Array.prototype.slice.call(document.querySelectorAll('.idx'));
+    var idx=[].slice.call(document.querySelectorAll('.idx'));
+    var pics=[].slice.call(document.querySelectorAll('.shots img, .shot img'));
+    var glow=document.querySelector('.bg');
+    var ghost=document.querySelector('.ghost');
     var queued=false;
+
+    function depth(el){
+      var r=el.getBoundingClientRect();
+      return (r.top + r.height/2 - innerHeight/2) / innerHeight;   /* -1 .. 1 */
+    }
     function frame(){
       queued=false;
       var max=document.documentElement.scrollHeight-innerHeight;
       if(prog) prog.style.transform='scaleX('+(max>0?Math.min(scrollY/max,1):0)+')';
-      if(!reduce){
-        idx.forEach(function(el){
-          var r=el.getBoundingClientRect();
-          var p=(r.top+r.height/2-innerHeight/2)/innerHeight;
-          el.style.transform='translate3d(0,'+(p*-46).toFixed(1)+'px,0)';
-        });
-      }
+      if(reduce) return;
+
+      idx.forEach(function(el){
+        el.style.transform='translate3d(0,'+(depth(el)*-46).toFixed(1)+'px,0)';
+      });
+      pics.forEach(function(el){
+        var r=el.getBoundingClientRect();
+        if(r.bottom < -200 || r.top > innerHeight+200) return;      /* skip offscreen */
+        el.style.setProperty('--py',(depth(el)*-22).toFixed(1)+'px');
+      });
+      if(glow) glow.style.transform='translate3d(0,'+(scrollY*0.04).toFixed(1)+'px,0)';
+      if(ghost) ghost.style.transform='translate3d('+(scrollY*-0.07).toFixed(1)+'px,'+(scrollY*0.1).toFixed(1)+'px,0)';
     }
     addEventListener('scroll',function(){ if(!queued){ queued=true; requestAnimationFrame(frame); } },{passive:true});
     addEventListener('resize',frame,{passive:true});
     frame();
   })();
+
+
+  /* ---- pointer spotlight on flagship cards ---- */
+  if(fine && !reduce){
+    document.querySelectorAll('.proj.feat').forEach(function(card){
+      card.addEventListener('pointermove',function(e){
+        var r=card.getBoundingClientRect();
+        card.style.setProperty('--mx',((e.clientX-r.left)/r.width*100).toFixed(1)+'%');
+        card.style.setProperty('--my',((e.clientY-r.top)/r.height*100).toFixed(1)+'%');
+      });
+    });
+  }
+
+  /* ---- 3D tilt on gallery images ---- */
+  if(fine && !reduce){
+    document.querySelectorAll('.shots img').forEach(function(im){
+      im.addEventListener('pointermove',function(e){
+        var r=im.getBoundingClientRect();
+        var px=(e.clientX-r.left)/r.width-.5;
+        var py=(e.clientY-r.top)/r.height-.5;
+        im.style.setProperty('--ry',(px*7).toFixed(2)+'deg');
+        im.style.setProperty('--rx',(py*-7).toFixed(2)+'deg');
+      });
+      im.addEventListener('pointerleave',function(){
+        im.style.setProperty('--ry','0deg');
+        im.style.setProperty('--rx','0deg');
+      });
+    });
+  }
 
   /* ---- magnetic pills ---- */
   if(fine && !reduce){
